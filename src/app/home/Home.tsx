@@ -7,7 +7,8 @@ import {
   useAsyncError,
 } from "react-router-dom";
 
-import "./App.css";
+import "./Home.css";
+import { useGetTestDataQuery } from "../../core/api/mswApi";
 
 export const loader = async () => {
   const critical1Promise = fetch("/test?text=critical1&delay=250").then((res) =>
@@ -60,45 +61,50 @@ function RenderAwaitedError() {
   );
 }
 
-function App() {
+export function Home() {
   const data = useLoaderData();
 
-  // console.log(data);
+  const { data: rtkData } = useGetTestDataQuery({
+    text: "Martin",
+    delay: 1000,
+  });
+
+  console.log(rtkData);
 
   return (
     <div className="App">
-      <p>{data.critical1.text}</p>
-      <p>{data.critical2.text}</p>
+      <p>{rtkData ? rtkData.text : ""}</p>
 
-      <React.Suspense fallback={<p>loading... should not see me!</p>}>
-        <Await resolve={data.lazyResolved}>
-          <RenderAwaitedData />
-        </Await>
-      </React.Suspense>
+      {/*<p>{data.critical1.text}</p>*/}
+      {/*<p>{data.critical2.text}</p>*/}
 
-      <React.Suspense fallback={<p>loading 1...</p>}>
-        <Await resolve={data.lazy1}>
-          <RenderAwaitedData />
-        </Await>
-      </React.Suspense>
+      {/*<React.Suspense fallback={<p>loading... should not see me!</p>}>*/}
+      {/*  <Await resolve={data.lazyResolved}>*/}
+      {/*    <RenderAwaitedData />*/}
+      {/*  </Await>*/}
+      {/*</React.Suspense>*/}
 
-      <React.Suspense fallback={<p>loading 2...</p>}>
-        <Await resolve={data.lazy2}>
-          <RenderAwaitedData />
-        </Await>
-      </React.Suspense>
+      {/*<React.Suspense fallback={<p>loading 1...</p>}>*/}
+      {/*  <Await resolve={data.lazy1}>*/}
+      {/*    <RenderAwaitedData />*/}
+      {/*  </Await>*/}
+      {/*</React.Suspense>*/}
 
-      <React.Suspense fallback={<p>loading 3...</p>}>
-        <Await resolve={data.lazy3}>{(data) => <p>{data.text}</p>}</Await>
-      </React.Suspense>
+      {/*<React.Suspense fallback={<p>loading 2...</p>}>*/}
+      {/*  <Await resolve={data.lazy2}>*/}
+      {/*    <RenderAwaitedData />*/}
+      {/*  </Await>*/}
+      {/*</React.Suspense>*/}
 
-      <React.Suspense fallback={<p>loading (error)...</p>}>
-        <Await resolve={data.lazyError} errorElement={<RenderAwaitedError />}>
-          <RenderAwaitedData />
-        </Await>
-      </React.Suspense>
+      {/*<React.Suspense fallback={<p>loading 3...</p>}>*/}
+      {/*  <Await resolve={data.lazy3}>{(data) => <p>{data.text}</p>}</Await>*/}
+      {/*</React.Suspense>*/}
+
+      {/*<React.Suspense fallback={<p>loading (error)...</p>}>*/}
+      {/*  <Await resolve={data.lazyError} errorElement={<RenderAwaitedError />}>*/}
+      {/*    <RenderAwaitedData />*/}
+      {/*  </Await>*/}
+      {/*</React.Suspense>*/}
     </div>
   );
 }
-
-export default App;

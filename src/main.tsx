@@ -3,20 +3,24 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import App, { loader } from "./App";
-import "./index.css";
+import { Home } from "./app/home/Home";
+import { loader } from "./app/home/loader";
 import { worker } from "./mocks/browser";
 import { store } from "./store";
+
+import "./index.css";
 
 if (process.env.NODE_ENV === "development") {
   worker.start().catch((e) => console.log(e));
 }
 
+const { dispatch } = store;
+
 const router = createBrowserRouter([
   {
     path: "/*",
-    element: <App />,
-    loader,
+    element: <Home />,
+    loader: loader(dispatch),
   },
 ]);
 
