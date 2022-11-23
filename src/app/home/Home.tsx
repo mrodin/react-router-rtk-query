@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import "./Home.css";
-import { useGetTestDataQuery } from "../../core/api/mswApi";
+import { useGetTestDataQuery } from "../../api/mswApi";
 
 export const loader = async () => {
   const critical1Promise = fetch("/test?text=critical1&delay=250").then((res) =>
@@ -73,7 +73,7 @@ export function Home() {
 
   return (
     <div className="App">
-      <p>{rtkData ? rtkData.text : ""}</p>
+      <p>{rtkData.text}</p>
 
       {/*<p>{data.critical1.text}</p>*/}
       {/*<p>{data.critical2.text}</p>*/}
