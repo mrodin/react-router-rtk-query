@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Home } from "./app/home/Home";
 import { loader } from "./app/home/loader";
+import { Page } from "./app/page/Page";
 import { worker } from "./mocks/browser";
 import { store } from "./store";
 
@@ -18,9 +19,13 @@ const { dispatch } = store;
 
 const router = createBrowserRouter([
   {
-    path: "/*",
+    path: "/",
     element: <Home />,
     loader: loader(dispatch),
+  },
+  {
+    path: "/page",
+    element: <Page />,
   },
 ]);
 

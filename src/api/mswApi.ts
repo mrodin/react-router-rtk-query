@@ -1,18 +1,26 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+type RequestParams = {
+  delay: number;
+};
+
+type Response = {
+  payload: string;
+};
+
 export const testApi = createApi({
-  reducerPath: "testApi",
+  reducerPath: "successApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5173/" }),
   endpoints: (builder) => ({
-    getTestData: builder.query<string, string>({
-      query: ({ text, delay }) => {
+    getCriticalOne: builder.query<Response, RequestParams>({
+      query: ({ delay }) => {
         return {
-          url: "test",
-          params: { text, delay },
+          url: "success",
+          params: { delay },
         };
       },
     }),
   }),
 });
 
-export const { useGetTestDataQuery } = testApi;
+export const { useGetCriticalOneQuery } = testApi;

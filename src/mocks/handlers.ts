@@ -1,14 +1,13 @@
 import { rest } from "msw";
 
 export const handlers = [
-  rest.get("/test", (req, res, ctx) => {
+  rest.get("/success", (req, res, ctx) => {
     const params = new URL(req.url).searchParams;
     const delay = Number(params.get("delay")) || 200;
-    const text = params.get("text");
     return res(
       ctx.delay(delay),
       ctx.json({
-        text,
+        payload: `Success response in ${delay.toString()}!`,
       })
     );
   }),

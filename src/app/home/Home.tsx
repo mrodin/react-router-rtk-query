@@ -1,34 +1,15 @@
 import React from "react";
-import {
-  useLoaderData,
-  defer,
-  Await,
-  useAsyncValue,
-  useAsyncError,
-} from "react-router-dom";
+import { useLoaderData, defer, Await, useAsyncValue, useAsyncError, Link } from "react-router-dom";
 
-import "./Home.css";
-import { useGetTestDataQuery } from "../../api/mswApi";
+import { useGetCriticalOneQuery } from "../../api/mswApi";
 
 export const loader = async () => {
-  const critical1Promise = fetch("/test?text=critical1&delay=250").then((res) =>
-    res.json()
-  );
-  const critical2Promise = fetch("/test?text=critical2&delay=500").then((res) =>
-    res.json()
-  );
-  const lazyResolvedPromise = fetch("/test?text=lazyResolved&delay=100").then(
-    (res) => res.json()
-  );
-  const lazy1Promise = fetch("/test?text=lazy1&delay=500").then((res) =>
-    res.json()
-  );
-  const lazy2Promise = fetch("/test?text=lazy2&delay=1500").then((res) =>
-    res.json()
-  );
-  const lazy3Promise = fetch("/test?text=lazy3&delay=2500").then((res) =>
-    res.json()
-  );
+  const critical1Promise = fetch("/test?text=critical1&delay=250").then((res) => res.json());
+  const critical2Promise = fetch("/test?text=critical2&delay=500").then((res) => res.json());
+  const lazyResolvedPromise = fetch("/test?text=lazyResolved&delay=100").then((res) => res.json());
+  const lazy1Promise = fetch("/test?text=lazy1&delay=500").then((res) => res.json());
+  const lazy2Promise = fetch("/test?text=lazy2&delay=1500").then((res) => res.json());
+  const lazy3Promise = fetch("/test?text=lazy3&delay=2500").then((res) => res.json());
   const lazyErrorPromise = fetch("/test?text=lazy3&delay=3000").then((res) => {
     throw Error("Oh noo!");
   });
@@ -64,47 +45,19 @@ function RenderAwaitedError() {
 export function Home() {
   const data = useLoaderData();
 
-  const { data: rtkData } = useGetTestDataQuery({
-    text: "Martin",
+  const { data: criticalOne } = useGetCriticalOneQuery({
     delay: 1000,
   });
 
-  console.log(rtkData);
-
   return (
-    <div className="App">
-      <p>{rtkData.text}</p>
-
-      {/*<p>{data.critical1.text}</p>*/}
-      {/*<p>{data.critical2.text}</p>*/}
-
-      {/*<React.Suspense fallback={<p>loading... should not see me!</p>}>*/}
-      {/*  <Await resolve={data.lazyResolved}>*/}
-      {/*    <RenderAwaitedData />*/}
-      {/*  </Await>*/}
-      {/*</React.Suspense>*/}
-
-      {/*<React.Suspense fallback={<p>loading 1...</p>}>*/}
-      {/*  <Await resolve={data.lazy1}>*/}
-      {/*    <RenderAwaitedData />*/}
-      {/*  </Await>*/}
-      {/*</React.Suspense>*/}
-
-      {/*<React.Suspense fallback={<p>loading 2...</p>}>*/}
-      {/*  <Await resolve={data.lazy2}>*/}
-      {/*    <RenderAwaitedData />*/}
-      {/*  </Await>*/}
-      {/*</React.Suspense>*/}
-
-      {/*<React.Suspense fallback={<p>loading 3...</p>}>*/}
-      {/*  <Await resolve={data.lazy3}>{(data) => <p>{data.text}</p>}</Await>*/}
-      {/*</React.Suspense>*/}
-
-      {/*<React.Suspense fallback={<p>loading (error)...</p>}>*/}
-      {/*  <Await resolve={data.lazyError} errorElement={<RenderAwaitedError />}>*/}
-      {/*    <RenderAwaitedData />*/}
-      {/*  </Await>*/}
-      {/*</React.Suspense>*/}
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="grid grid-cols-2 gap-6">
+        <div className="bg-red-700 p-12">{criticalOne!.payload}</div>
+        <div className="bg-red-700 p-12" />
+        <div className="bg-red-700 p-12" />
+        <div className="bg-red-700 p-12" />
+      </div>
+      <Link to="page">Link to page</Link>
     </div>
   );
 }
