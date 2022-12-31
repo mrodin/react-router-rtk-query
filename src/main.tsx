@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Home } from "./app/home/Home";
-import { loader } from "./app/home/loader";
 import { Page } from "./app/page/Page";
 import { worker } from "./mocks/browser";
 import { store } from "./store";
@@ -15,13 +14,10 @@ if (process.env.NODE_ENV === "development") {
   worker.start().catch((e) => console.log(e));
 }
 
-const { dispatch } = store;
-
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    loader: loader(dispatch),
   },
   {
     path: "/page",
