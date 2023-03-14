@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 type RequestParams = {
-  delay: number;
+  delay?: number;
 };
 
 type Response = {

@@ -5,7 +5,7 @@ import { useGetRepliesQuery } from "../../api";
 import { AsyncData } from "../../components/AsyncData";
 
 export const Replies: FC = () => {
-  const { data, isLoading } = useGetRepliesQuery({ delay: 2500 });
+  const { data, isLoading } = useGetRepliesQuery({ delay: 4500 });
 
   return (
     <>

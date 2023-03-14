@@ -6,7 +6,7 @@ import { AsyncData } from "../../components/AsyncData";
 import { Replies } from "./Replies";
 
 export const Comments: FC = () => {
-  const { data, isLoading } = useGetCommentsQuery({ delay: 1500 });
+  const { data, isLoading } = useGetCommentsQuery({ delay: 2500 });
 
   return (
     <>

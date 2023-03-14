@@ -2,6 +2,7 @@ import React from "react";
 
 import { Dashboard } from "./Dashboard";
 import { Projects } from "./Projects";
+import { Link } from "react-router-dom";
 
 export const Home = () => (
   <div className="flex min-h-screen flex-row bg-gray-100 text-gray-800">
@@ -19,8 +20,8 @@ export const Home = () => (
             <span className="my-4 flex px-4 text-sm font-medium uppercase text-gray-300">Account</span>
           </li>
           <li className="my-px">
-            <a
-              href="#"
+            <Link
+              to="/page"
               className="flex h-10 flex-row items-center rounded-lg px-3 text-gray-300 hover:bg-gray-100 hover:text-gray-700"
             >
               <span className="flex items-center justify-center text-lg text-gray-400">
@@ -37,7 +38,7 @@ export const Home = () => (
                 </svg>
               </span>
               <span className="ml-3">Profile</span>
-            </a>
+            </Link>
           </li>
           <li className="my-px">
             <a
