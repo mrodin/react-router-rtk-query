@@ -1,19 +1,26 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { FC } from "react";
 
-import { useGetCommentsQuery } from "../../api";
 import { AsyncData } from "../../components/AsyncData";
 import { Replies } from "./Replies";
+import { Await, useLoaderData } from "react-router-dom";
 
 export const Comments: FC = () => {
-  const { data, isLoading } = useGetCommentsQuery({ delay: 1500 });
+  const data = useLoaderData() as any;
 
   return (
     <>
       <h2 className="self-start text-2xl font-bold text-gray-700">Comments (lazy)</h2>
-      <AsyncData loading={isLoading} height={200} response={data?.payload}>
-        <Replies />
-      </AsyncData>
+
+      <Suspense fallback={<AsyncData loading height={200} />}>
+        <Await resolve={data.comments} errorElement={<p>Error loading package location!</p>}>
+          {(comments) => (
+            <AsyncData loading={false} height={200} response={comments.payload}>
+              <Replies />
+            </AsyncData>
+          )}
+        </Await>
+      </Suspense>
     </>
   );
 };

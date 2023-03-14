@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Home } from "./app/home/Home";
+import { loader as homeLoader } from "./app/home/loader";
 import { Page } from "./app/page/Page";
 import { worker } from "./mocks/browser";
 import { store } from "./store";
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    loader: homeLoader,
   },
   {
     path: "/page",

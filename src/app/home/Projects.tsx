@@ -1,11 +1,17 @@
 import type { FC } from "react";
-import React from "react";
+import React, { Suspense } from "react";
+import { Await, useLoaderData } from "react-router-dom";
 
-import { useGetProjectsQuery } from "../../api";
 import { AsyncData } from "../../components/AsyncData";
 
 export const Projects: FC = () => {
-  const { data, isLoading } = useGetProjectsQuery({ delay: 2000 });
+  const data = useLoaderData() as any;
 
-  return <AsyncData loading={isLoading} height={100} response={data?.payload} />;
+  return (
+    <Suspense fallback={<AsyncData loading height={100} />}>
+      <Await resolve={data.projects} errorElement={<p>Error loading package location!</p>}>
+        {(projects) => <AsyncData loading={false} height={100} response={projects.payload} />}
+      </Await>
+    </Suspense>
+  );
 };
